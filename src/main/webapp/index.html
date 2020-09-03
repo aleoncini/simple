@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Test Application</title>
+    <!-- proper charset -->
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <link rel="stylesheet" type="text/css" href="eap.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+
+<body>
+
+<div id="container" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;">
+  
+  <!-- header -->
+  <div class="header-panel">
+    <div class="header-line">&nbsp;</div>
+    <div class="header-top">
+      <img class="prod-title" src="images/product_title.png"/><span class="prod-version">7.1.5</span>
+    </div>
+    <div class="header-bottom">&nbsp;</div>
+  </div>
+
+  <!-- main content -->
+  <div id="content">
+
+    <div class="section">
+
+      <h1>Welcome to JBoss EAP 7</h1>
+
+      <h3>This instance is a simple web application you can use to test a deployment process on OpenShift</h3>
+
+        <p>The beatiful app contains a very simple REST service that generates a <b>UUID Code</b>.
+            <button id="btn_get_code" type="button" class="btn btn-primary">get code</button>
+        </p>
+
+        <div id="uuidcode"></div>
+
+        <p>In case you configured a KEYCLOAK auth method against an SSO server into the <i>web.xml</i> file of your app
+            <br>you can try to access this <a href="protected.html">protected</a> page to verify the configuration.
+
+    </div>
+
+  </div>
+
+  <div id="footer">&nbsp;</div>
+
+</div>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/app.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $("#btn_get_code").click(function(){
+            getCode();
+        });
+    });
+
+</script>
+</body >
+</html>
