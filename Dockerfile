@@ -8,8 +8,6 @@ RUN mvn clean package
 
 # Create final image
 FROM jboss/wildfly
-
-FROM registry.redhat.io/ubi8/openjdk-8
 COPY --from=build /home/jboss/target/simple.war /opt/jboss/wildfly/standalone/deployments/
 EXPOSE 8080
 USER 1001
