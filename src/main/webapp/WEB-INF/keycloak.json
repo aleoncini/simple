@@ -1,0 +1,8 @@
+{
+    "realm": "demo",
+    "auth-server-url": "https://sso-ssodemo.apps.ocp4.rhocplab.com/auth/",
+    "ssl-required": "external",
+    "resource": "simple",
+    "public-client": true,
+    "confidential-port": 0
+  }

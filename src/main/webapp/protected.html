@@ -34,16 +34,15 @@
 
             <p>Go back to the <a href="index.html">Home page</a></p>
 
-            <p>User full name: <span id="usr_full_name"></span></p>
-            <p>email: <span id="usr_email"></span></p>
-
-            <p>Close this current session <button id="btn_log_off" type="button" class="btn btn-primary">logout</button></p>
+            <p>User full name: <span style="font-weight: bold" id="username"></span></p>
+            <p>email: <span style="font-weight: bold" id="email"></span></p>
+            <p>Roles: <span style="font-weight: bold" id="roles"></span></p>
 
         </div>
 
     </div>
 
-    <div id="footer">Developed by Red Hat GPS</div>
+    <div id="footer">Developed by Red Hat SA Team</div>
 
 </div>
 
@@ -54,7 +53,7 @@
     $(document).ready(function(){
         getUserInfoFromHeaders();
         $("#btn_log_off").click(function(){
-            window.location = "/simple/logout";
+            logOff();
         });
     });
 

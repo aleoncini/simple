@@ -18,7 +18,7 @@
   <div class="header-panel">
     <div class="header-line">&nbsp;</div>
     <div class="header-top">
-      <img class="prod-title" src="images/product_title.png"/><span class="prod-version">7.1.5</span>
+      <img class="prod-title" src="images/product_title.png"/><span class="prod-version">7</span>
     </div>
     <div class="header-bottom">&nbsp;</div>
   </div>
@@ -28,9 +28,11 @@
 
     <div class="section">
 
-      <h1>Welcome to JBoss EAP 7</h1>
+      <h1>Welcome to JBoss Wildfly</h1>
 
       <h3>This instance is a simple web application you can use to test a deployment process on OpenShift</h3>
+      
+      <h4>Instance name: <span id="instance_name"></span></h4>
 
         <p>The beatiful app contains a very simple REST service that generates a <b>UUID Code</b>.
             <button id="btn_get_code" type="button" class="btn btn-primary">get code</button>
@@ -54,6 +56,7 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
+      getInstanceName();
         $("#btn_get_code").click(function(){
             getCode();
         });

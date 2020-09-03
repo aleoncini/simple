@@ -1,3 +1,17 @@
+function getInstanceName() {
+    var theUrl = 'rs/instance';
+    $.ajax({
+        url: theUrl,
+        type: 'GET',
+        data: {},
+        dataType: 'json',
+        complete: function(response, status, xhr){
+            var data = jQuery.parseJSON(response.responseText);
+            $("#instance_name").text(data.name);
+        }
+    });
+};
+
 function getCode() {
     var theUrl = '/simple/rs/uuid';
     $.ajax({
@@ -13,7 +27,7 @@ function getCode() {
 };
 
 function logOff() {
-    var theUrl = '/simple/rs/logout';
+    var theUrl = 'rs/logout';
     console.log("calling local log off service " + theUrl);
     $.ajax({
         url: theUrl,
@@ -23,8 +37,7 @@ function logOff() {
         complete: function(response, status, xhr){
             var data = jQuery.parseJSON(response.responseText);
             console.log("Log off status: " + data.status);
-            console.log("Now calling GLOBAL log off service.");
-            globalLogOff();
+            window.location = "/simple/index.html";
         }
     });
 };
@@ -45,5 +58,20 @@ function globalLogOff() {
 };
 
 function getUserInfoFromHeaders() {
-    console.log("===> getting user info from http headers")
+    var theUrl = 'rs/user';
+    $.ajax({
+        url: theUrl,
+        type: 'GET',
+        data: {},
+        dataType: 'json',
+        complete: function(response, status, xhr){
+            var data = jQuery.parseJSON(response.responseText);
+            console.log("username: " + data.name);
+            console.log("email: " + data.email);
+            console.log("roles: " + data.roles);
+            $("#username").text(data.name);
+            $("#email").text(data.email);
+            $("#roles").text(data.roles);
+        }
+    });
 };
