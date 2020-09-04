@@ -13,7 +13,7 @@ function getInstanceName() {
 };
 
 function getCode() {
-    var theUrl = '/simple/rs/uuid';
+    var theUrl = 'rs/uuid';
     $.ajax({
         url: theUrl,
         type: 'GET',
@@ -37,21 +37,6 @@ function logOff() {
         complete: function(response, status, xhr){
             var data = jQuery.parseJSON(response.responseText);
             console.log("Log off status: " + data.status);
-            window.location = "/simple/index.html";
-        }
-    });
-};
-
-function globalLogOff() {
-    var GLO_url = 'http://sso.leo:8080/auth/realms/lc_poc/protocol/openid-connect/logout?redirect_uri=http%3A%2F%2Fsp1.leo%3A8080%2Fsimple';
-    $.ajax({
-        url: GLO_url,
-        type: 'GET',
-        data: {},
-        dataType: 'json',
-        complete: function(response, status, xhr){
-            var data = jQuery.parseJSON(response.responseText);
-            console.log("GLO response: " + data);
             window.location = "/simple/index.html";
         }
     });
