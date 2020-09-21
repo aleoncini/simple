@@ -4,5 +4,5 @@
     "ssl-required": "external",
     "resource": "simple",
     "public-client": true,
-    "confidential-port": 0
-  }
+    "confidential-port": 443
+}

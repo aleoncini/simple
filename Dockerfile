@@ -17,7 +17,7 @@ RUN ./jboss-cli.sh --file=adapter-elytron-install-offline.cli
 WORKDIR /opt/jboss
 
 # install the application built at stage 1
-COPY --from=build /home/jboss/target/simple.war /opt/jboss/wildfly/standalone/deployments/
+COPY --from=build /home/jboss/target/ROOT.war /opt/jboss/wildfly/standalone/deployments/
 
 # fix an issue
 RUN rm -rf /opt/jboss/wildfly/standalone/configuration/standalone_xml_history/current
@@ -29,7 +29,7 @@ RUN chgrp -R 0 $JBOSS_HOME &&\
     chmod -R g+rw $JBOSS_HOME
 
 # Expose the ports we're interested in
-EXPOSE 8080
+EXPOSE 8443
 
 # Set the default command to run on boot
 # This will boot WildFly in the standalone mode and bind to all interface
