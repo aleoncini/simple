@@ -1,0 +1,215 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: simple
+message: |-
+  The following service(s) have been created in your project: ${APPLICATION_NAME}.
+metadata:
+  annotations:
+    description: A template to deploy a simple demo applicatoin on Wildfly
+    iconClass: icon-eap
+    openshift.io/display-name: Simple application
+    openshift.io/documentation-url: https://github.com/aleoncini/simple.git
+    openshift.io/long-description: This template defines resources needed to run a simple demo application on Wildfly
+    tags: simple,eap
+  name: simple
+objects:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: ${APPLICATION_NAME}
+      name: ${APPLICATION_NAME}
+    spec:
+      ports:
+      - name: 8080-tcp
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+      - name: 8443-tcp
+        port: 8443
+        protocol: TCP
+        targetPort: 8443
+      selector:
+        app: ${APPLICATION_NAME}
+        deploymentconfig: ${APPLICATION_NAME}
+      sessionAffinity: None
+      type: ClusterIP
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        app: ${APPLICATION_NAME}
+      name: ${APPLICATION_NAME}
+    spec:
+      replicas: 1
+      selector:
+        deploymentConfig: ${APPLICATION_NAME}
+      strategy:
+        rollingParams:
+          maxSurge: 25%
+          maxUnavailable: 25%
+        type: Rolling
+      template:
+        metadata:
+          labels:
+            app: ${APPLICATION_NAME}
+            deploymentConfig: ${APPLICATION_NAME}
+        spec:
+          containers:
+          - env:
+            - name: INSTANCE_NAME
+              value: ${INSTANCE_NAME}
+            - name: SSO_REALM
+              value: ${SSO_REALM}
+            - name: SSO_SERVER_URL
+              value: ${SSO_SERVER_URL}
+            - name: SSO_RESOURCE
+            image: ${APPLICATION_NAME}
+            imagePullPolicy: Always
+            name: ${APPLICATION_NAME}
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            readinessProbe:
+              httpGet:
+                path: /rs/ping
+                port: 8443
+                scheme: HTTPS
+              failureThreshold: 3
+              initialDelaySeconds: 10
+              periodSeconds: 3
+              successThreshold: 1
+              timeoutSeconds: 3
+            livenessProbe:
+              tcpSocket:
+                port: 8443
+              failureThreshold: 3
+              initialDelaySeconds: 10
+              periodSeconds: 3
+              successThreshold: 1
+              timeoutSeconds: 3
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+      triggers:
+      - imageChangeParams:
+          automatic: true
+          containerNames:
+          - ${APPLICATION_NAME}
+          from:
+            kind: ImageStreamTag
+            name: ${APPLICATION_NAME}:latest
+        type: ImageChange
+      - type: ConfigChange
+          
+  - apiVersion: build.openshift.io/v1
+    kind: BuildConfig
+    metadata:
+      labels:
+        app: ${APPLICATION_NAME}
+      name: ${APPLICATION_NAME}
+    spec:
+      failedBuildsHistoryLimit: 5
+      output:
+        to:
+          kind: ImageStreamTag
+          name: ${APPLICATION_NAME}:latest
+      postCommit: {}
+      resources: {}
+      runPolicy: Serial
+      source:
+        contextDir: /
+        git:
+          uri: ${GIT_URL}
+        type: Git
+      strategy:
+        dockerStrategy:
+          dockerfilePath: Dockerfile
+        type: Docker
+      successfulBuildsHistoryLimit: 5
+      triggers:
+        - github:
+            secret: ${GITHUB_WEBHOOK_SECRET}
+          type: GitHub
+        - generic:
+            secret: ${GENERIC_WEBHOOK_SECRET}
+          type: Generic
+        - imageChange: {}
+          type: ImageChange
+        - type: ConfigChange
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      labels:
+        application: ${APPLICATION_NAME}
+      name: ${APPLICATION_NAME}
+  - apiVersion: route.openshift.io/v1
+    kind: Route
+    metadata:
+      labels:
+        app: ${APPLICATION_NAME}
+      name: ${APPLICATION_NAME}
+    spec:
+      host: ${ROUTE_HOSTNAME}
+      port:
+        targetPort: 8443
+      tls:
+        termination: passthrough
+      to:
+        kind: Service
+        name: ${APPLICATION_NAME}
+        weight: 100
+      wildcardPolicy: None
+parameters:
+  - name: APPLICATION_NAME
+    description: Application Name
+    displayName: Application Name
+    required: true
+    value: simple
+  - name: GIT_URL
+    description: Git repository URL
+    displayName: Git URL
+    required: true
+    value: https://github.com/aleoncini/simple.git
+  - name: ROUTE_HOSTNAME
+    description: Route hostname
+    displayName: Route hostname
+    required: false
+  - name: INSTANCE_NAME
+    description: Application instance name
+    diplayName: Instance name
+    required: true
+    value: demo
+  - name: SSO_REALM
+    description: The user realm that contains your user
+    diplayName: SSO Realm
+    required: true
+    value: demo
+  - name: SSO_SERVER_URL
+    description: The URL of the SSO/Keycloak identity provider
+    diplayName: SSO Server URL
+    required: true
+  - name: SSO_RESOURCE
+    description: The SSO client name
+    diplayName: SSO Resource
+    required: true
+    value: simple
+  - description: GitHub trigger secret
+    displayName: Github Webhook Secret
+    from: '[a-zA-Z0-9]{8}'
+    generate: expression
+    name: GITHUB_WEBHOOK_SECRET
+    required: true
+  - description: Generic build trigger secret
+    displayName: Generic Webhook Secret
+    from: '[a-zA-Z0-9]{8}'
+    generate: expression
+    name: GENERIC_WEBHOOK_SECRET
+    required: true
+  
+
+
+
