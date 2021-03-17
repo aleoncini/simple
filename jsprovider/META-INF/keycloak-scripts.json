@@ -1,0 +1,18 @@
+{
+    "authenticators": [
+        {
+            "name": "Log Authenticator",
+            "fileName": "log-authenticator.js",
+            "description": "A dummy Authenticator just to test JS Provider"
+        }
+    ],
+    "policies": [
+        {
+            "name": "Simple Policy",
+            "fileName": "simple-policy.js",
+            "description": "A simple Policy to test JS Provider"
+        }
+    ],
+    "mappers": [
+    ]
+}
