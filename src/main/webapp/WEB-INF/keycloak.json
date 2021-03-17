@@ -3,6 +3,9 @@
     "auth-server-url": "${env.SSO_SERVER_URL}",
     "ssl-required": "external",
     "resource": "${env.SSO_RESOURCE}",
-    "public-client": true,
+    "verify-token-audience": true,
+    "credentials": {
+      "secret": "${env.SSO_SECRET}"
+    },
     "confidential-port": 0
 }
