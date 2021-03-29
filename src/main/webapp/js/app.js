@@ -26,6 +26,20 @@ function getCode() {
     });
 };
 
+function getInfo() {
+    var theUrl = 'rs/user';
+    $.ajax({
+        url: theUrl,
+        type: 'GET',
+        data: {},
+        dataType: 'json',
+        complete: function(response, status, xhr){
+            var data = jQuery.parseJSON(response.responseText);
+            $("#userinfo").text(data);
+        }
+    });
+};
+
 function logOff() {
     var theUrl = 'rs/logout';
     console.log("calling local log off service " + theUrl);

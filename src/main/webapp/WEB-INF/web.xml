@@ -3,15 +3,28 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Simple Web Application</display-name>
+    <display-name>Simple Web Application</display-name>
 
-  <security-constraint>
+    <security-constraint>
         <web-resource-collection>
             <web-resource-name>protected</web-resource-name>
             <url-pattern>/protected.html</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>user</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>points</web-resource-name>
+            <url-pattern>/pointcard.html</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>pointcarduser</role-name>
         </auth-constraint>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
@@ -28,6 +41,9 @@
   </security-role>
   <security-role>
       <role-name>user</role-name>
+  </security-role>
+  <security-role>
+      <role-name>pointcarduser</role-name>
   </security-role>
 
 </web-app>
