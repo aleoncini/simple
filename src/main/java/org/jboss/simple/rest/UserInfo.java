@@ -6,6 +6,8 @@ public class UserInfo {
     private String name;
     private String email;
     private Set<String> roles;
+    private Set<String> attributes;
+    private String accessToken;
 
     public String getName() {
         return name;
@@ -34,13 +36,47 @@ public class UserInfo {
         return this;
     }
 
+    public Set<String> getAttributes() {
+        return attributes;
+    }
+
+    public UserInfo setAttributes(Set<String> attributes) {
+        this.attributes = attributes;
+        return this;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public UserInfo setAccessToken(String token) {
+        this.accessToken = token;
+        return this;
+    }
+
     public String toString(){
         StringBuffer buffer = new StringBuffer();
         buffer.append("{");
         buffer.append("\"name\":\"").append(name).append("\",");
         buffer.append("\"email\":\"").append(email).append("\",");
-        buffer.append("\"roles\":\"").append(getRoleString()).append("\"");
+        buffer.append("\"accessToken\":\"").append(accessToken).append("\",");
+        buffer.append("\"roles\":\"").append(getRoleString()).append("\",");
+        buffer.append("\"attributes\":\"").append(getAttributesString()).append("\"");
         buffer.append("}");
+        return buffer.toString();
+    }
+
+    private String getAttributesString() {
+        boolean isFirst = true;
+        StringBuffer buffer = new StringBuffer();
+        for (String attribute: attributes) {
+            if (isFirst){
+                buffer.append(attribute);
+                isFirst = false;
+            } else {
+                buffer.append(", ").append(attribute);
+            }
+        }
         return buffer.toString();
     }
 

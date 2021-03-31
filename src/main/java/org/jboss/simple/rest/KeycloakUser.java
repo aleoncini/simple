@@ -20,7 +20,8 @@ public class KeycloakUser {
         String name = securityContext.getToken().getGivenName() + " " + securityContext.getToken().getFamilyName();
         String email = securityContext.getToken().getEmail();
         Set<String> roles = securityContext.getToken().getRealmAccess().getRoles();
-        UserInfo userInfo = new UserInfo().setName(name).setEmail(email).setRoles(roles);
+        String token = securityContext.getTokenString();
+        UserInfo userInfo = new UserInfo().setName(name).setEmail(email).setRoles(roles).setAccessToken(token);
         return Response.status(200).entity(userInfo.toString()).build();
     }
 }
