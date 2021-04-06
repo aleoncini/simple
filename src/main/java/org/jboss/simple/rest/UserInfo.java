@@ -60,8 +60,10 @@ public class UserInfo {
         buffer.append("\"name\":\"").append(name).append("\",");
         buffer.append("\"email\":\"").append(email).append("\",");
         buffer.append("\"accessToken\":\"").append(accessToken).append("\",");
-        buffer.append("\"roles\":\"").append(getRoleString()).append("\",");
-        buffer.append("\"attributes\":\"").append(getAttributesString()).append("\"");
+        buffer.append("\"roles\":\"").append(getRoleString()).append("\"");
+        if(attributes != null){
+            buffer.append(",\"attributes\":\"").append(getAttributesString()).append("\"");
+        }
         buffer.append("}");
         return buffer.toString();
     }
