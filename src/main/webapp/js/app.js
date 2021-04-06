@@ -51,7 +51,7 @@ function logOff() {
         complete: function(response, status, xhr){
             var data = jQuery.parseJSON(response.responseText);
             console.log("Log off status: " + data.status);
-            window.location = "/simple/index.html";
+            window.location = "/index.html";
         }
     });
 };
