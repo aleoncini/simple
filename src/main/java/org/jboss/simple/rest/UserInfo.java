@@ -7,7 +7,7 @@ public class UserInfo {
     private String email;
     private Set<String> roles;
     private String accessToken;
-    private int logins;
+    private int logins = -1;
 
     public String getName() {
         return name;
@@ -60,7 +60,9 @@ public class UserInfo {
         buffer.append("\"name\":\"").append(name).append("\",");
         buffer.append("\"email\":\"").append(email).append("\",");
         buffer.append("\"accessToken\":\"").append(accessToken).append("\",");
-        buffer.append("\"logins\":").append(logins).append(",");
+        if(logins >= 0){
+            buffer.append("\"logins\":").append(logins).append(",");
+        }
         buffer.append("\"roles\":\"").append(getRoleString()).append("\"");
         buffer.append("}");
         return buffer.toString();

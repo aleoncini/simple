@@ -69,7 +69,9 @@ function getUserInfoFromHeaders() {
             $("#email").text(data.email);
             $("#roles").text(data.roles);
             $("#tkn").text(data.accessToken);
-            $("#logins").text(data.logins);
+            if(data.logins != null){
+                $("#logins").text(data.logins);
+            }
         }
     });
 };

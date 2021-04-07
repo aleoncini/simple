@@ -26,9 +26,11 @@ public class KeycloakUser {
         Map<String, Object> otherClaims = securityContext.getToken().getOtherClaims();     
         UserInfo userInfo = new UserInfo().setName(name).setEmail(email).setRoles(roles).setAccessToken(token);
         try {
-            int loginNumber = Integer.valueOf(otherClaims.get("loginNumber").toString());
-            userInfo.setLogins(loginNumber);
-        } catch (NumberFormatException e) {
+            if(otherClaims != null){
+                int loginNumber = Integer.valueOf(otherClaims.get("loginNumber").toString());
+                userInfo.setLogins(loginNumber);
+            }
+        } catch (Exception e) {
             e.getLocalizedMessage();
         }
         return Response.status(200).entity(userInfo.toString()).build();
