@@ -24,7 +24,7 @@
             <url-pattern>/pointcard.html</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>pointcarduser</role-name>
+            <role-name>uma_authorization</role-name>
         </auth-constraint>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
@@ -43,7 +43,7 @@
       <role-name>user</role-name>
   </security-role>
   <security-role>
-      <role-name>pointcarduser</role-name>
+      <role-name>uma_authorization</role-name>
   </security-role>
 
 </web-app>

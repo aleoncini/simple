@@ -65,12 +65,11 @@ function getUserInfoFromHeaders() {
         dataType: 'json',
         complete: function(response, status, xhr){
             var data = jQuery.parseJSON(response.responseText);
-            console.log("username: " + data.name);
-            console.log("email: " + data.email);
-            console.log("roles: " + data.roles);
             $("#username").text(data.name);
             $("#email").text(data.email);
             $("#roles").text(data.roles);
+            $("#tkn").text(data.accessToken);
+            $("#logins").text(data.logins);
         }
     });
 };

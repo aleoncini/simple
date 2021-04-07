@@ -33,14 +33,13 @@
             <h3>If you can read this page you have properly configured your SSO Adapter.</h3>
 
             <p>Go back to the <a href="index.html">Home page</a></p>
-            <p>Get KEYCLOAK User Info<button id="btn_get_info" type="button" class="btn btn-primary">get info</button></p>
 
-            <div id="userinfo"></div>
-
-            <p>This page simulates a <i>REVOLVING</i> subscription protection</p>
             <p>User full name: <span style="font-weight: bold" id="username"></span></p>
             <p>email: <span style="font-weight: bold" id="email"></span></p>
+            <p>Token: <span style="font-weight: bold" id="tkn"></span></p>
             <p>Roles: <span style="font-weight: bold" id="roles"></span></p>
+            <p>nr of access: <span style="font-weight: bold" id="logins"></span></p>
+            <p><button id="btn_log_off" type="button" class="btn btn-primary">log out</button></p>
 
         </div>
 
@@ -56,9 +55,6 @@
 
     $(document).ready(function(){
         getUserInfoFromHeaders();
-        $("#btn_get_info").click(function(){
-            getInfo();
-        });
         $("#btn_log_off").click(function(){
             logOff();
         });
